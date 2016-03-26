@@ -9,9 +9,13 @@ goto main
 
 pushd %1
 for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
-    dnu restore "%%p"
-    dnu build "%%p"
-    dnu pack "%%p"
+    :: Exclude bin/ and obj/ directories
+    echo %%p | findstr /i /c:bin /c:obj > NUL
+    if %ERRORLEVEL% NEQ 0 (
+        dnu restore "%%p"
+        dnu build "%%p"
+        dnu pack "%%p"
+    )
 )
 popd
 goto :EOF
