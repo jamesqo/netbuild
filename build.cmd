@@ -12,7 +12,7 @@ for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
     :: Exclude bin/ and obj/ directories
     echo %%p | findstr /i /c:bin /c:obj > NUL
     if !ERRORLEVEL! NEQ 0 (
-        :: dnu is a batch script, so we need to call it
+        :: dnu is a batch script, so we need to `call` it
         call dnu restore "%%p"
         call dnu build "%%p"
         call dnu pack "%%p"
