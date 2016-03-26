@@ -2,8 +2,9 @@
 
 build_subdir()
 {
-    find "$1" -type f -name project.json -print0 |
-    while read -rd '' projectfile
+    find "$1" -type f -name project.json |
+    egrep -v '[Bb]in|[Oo]bj' |
+    while read -r projectfile
     do
         dnu restore "$projectfile"
         dnu build "$projectfile"
