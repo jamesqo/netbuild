@@ -26,6 +26,13 @@ if %ERRORLEVEL% NEQ 0 (
 )
 goto :EOF
 
+:runTests
+for /f "delims=" %%p in ('dir /a-d /b /s project.json') do dnx -p %%p test
+pushd %1
+
+popd
+goto :EOF
+
 :: Entry point
 :main
 
@@ -37,3 +44,4 @@ call :checkInstalled dnx
 cd %~dp0
 call :buildSubdir src
 call :buildSubdir test
+call :runTests test
