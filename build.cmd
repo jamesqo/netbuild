@@ -32,6 +32,7 @@ if %ERRORLEVEL% NEQ 0 (
 goto :EOF
 
 :runTests
+
 pushd %1
 for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
     :: Exclude bin/ and obj/ directories
