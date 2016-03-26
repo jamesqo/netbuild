@@ -35,7 +35,7 @@ pushd %1
 for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
     :: Exclude bin/ and obj/ directories
     echo %%p | findstr /i /c:bin /c:obj > NUL
-    if %ERRORLEVEL% NEQ 0 dnx -p %%p test
+    if %ERRORLEVEL% NEQ 0 dnx -p "%%p" test
 )
 popd
 goto :EOF
