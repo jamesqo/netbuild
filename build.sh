@@ -7,7 +7,7 @@ build_subdir()
     do
         dnu restore "$projectfile"
         dnu build "$projectfile"
-        dnu pack "$project file"
+        dnu pack "$projectfile"
     done
 }
 
