@@ -13,7 +13,9 @@ build_subdir()
 
 run_tests()
 {
-    find "$1" -type f -name project.json -exec dnx -p {} test \;
+    find "$1" -type f -name project.json |
+    egrep -v '[Bb]in|[Oo]bj' |
+    xargs -i dnx -p {} test
 }
 
 # Check prereqs
