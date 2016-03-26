@@ -27,5 +27,6 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 :: Do the actual work
+cd %~dp0
 call :buildSubdir src
 call :buildSubdir test
