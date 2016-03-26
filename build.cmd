@@ -27,9 +27,8 @@ if %ERRORLEVEL% NEQ 0 (
 goto :EOF
 
 :runTests
-for /f "delims=" %%p in ('dir /a-d /b /s project.json') do dnx -p %%p test
 pushd %1
-
+for /f "delims=" %%p in ('dir /a-d /b /s project.json') do dnx -p %%p test
 popd
 goto :EOF
 
