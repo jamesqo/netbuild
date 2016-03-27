@@ -12,6 +12,12 @@ build_subdir()
     done
 }
 
+fail()
+{
+    echo "$@" 1>&2
+    exit 1
+}
+
 run_tests()
 {
     find "$1" -type f -name project.json |
@@ -20,8 +26,8 @@ run_tests()
 }
 
 # Check prereqs
-type dnu > /dev/null 2>&1 || (echo "dnu isn't in your PATH!" 1>&2 && exit 1)
-type dnx > /dev/null 2>&1 || (echo "dnx isn't in your PATH!" 1>&2 && exit 1)
+type dnu > /dev/null 2>&1 || fail "dnu isn't in your PATH!"
+type dnx > /dev/null 2>&1 || fail "dnx isn't in your PATH!"
 
 scriptdir=$(dirname "$0")
 cd -P "$scriptdir"
