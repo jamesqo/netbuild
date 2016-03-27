@@ -14,7 +14,6 @@ for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
     if !ERRORLEVEL! NEQ 0 (
         :: dnu is a batch script, so we need to `call` it
         call dnu restore "%%p"
-        call dnu build "%%p"
         call dnu pack "%%p"
     )
 )
