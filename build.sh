@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Exit on failures
+set -o errexit
+# Catch failures in piped commands
+set -o pipefail
+# Catch unset variables
+set -o nounset
+
 build_subdir()
 {
     find "$1" -type f -name project.json |
