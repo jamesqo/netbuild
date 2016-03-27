@@ -7,7 +7,7 @@ build_subdir()
     while read -r projectfile
     do
         dnu restore "$projectfile"
-        dnu pack "$projectfile"
+        dnu pack "$projectfile" --configuration "$conf"
     done
 }
 
@@ -23,6 +23,20 @@ run_tests()
     grep -Ev '[Bb]in|[Oo]bj' |
     xargs -i dnx -p {} test
 }
+
+conf=Release
+
+# Parse options
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        -c|--configuration)
+            shift
+            conf=$1
+            ;;
+    esac
+    shift
+done
 
 # Check prereqs
 type dnu > /dev/null 2>&1 || fail "dnu isn't in your PATH!"
