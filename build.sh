@@ -3,7 +3,7 @@
 build_subdir()
 {
     find "$1" -type f -name project.json |
-    egrep -v '[Bb]in|[Oo]bj' |
+    grep -Ev '[Bb]in|[Oo]bj' |
     while read -r projectfile
     do
         dnu restore "$projectfile"
@@ -21,7 +21,7 @@ fail()
 run_tests()
 {
     find "$1" -type f -name project.json |
-    egrep -v '[Bb]in|[Oo]bj' |
+    grep -Ev '[Bb]in|[Oo]bj' |
     xargs -i dnx -p {} test
 }
 
