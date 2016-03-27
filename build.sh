@@ -7,7 +7,6 @@ build_subdir()
     while read -r projectfile
     do
         dnu restore "$projectfile"
-        dnu build "$projectfile"
         dnu pack "$projectfile"
     done
 }
