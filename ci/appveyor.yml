@@ -1,0 +1,5 @@
+install:
+  - dnvm upgrade
+build_script:
+  - build.cmd
+test: off
