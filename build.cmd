@@ -7,11 +7,7 @@ goto main
 
 :buildSubdir
 
-for /f "delims=" %%p in ('call :listProjects %*') do (
-    :: dnu is a batch script, so we need to `call` it
-    call dnu restore "%%p"
-    call dnu pack "%%p"
-)
+for /f "delims=" %%p in ('call :listProjects %*') do call dnu pack "%%p"
 goto :EOF
 
 :checkInstalled
@@ -34,6 +30,12 @@ for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
 popd
 goto :EOF
 
+:restore
+
+:: dnu is a batch script, so we need to `call` it
+for /f "delims=" %%p in ('call :listProjects %*') do call dnu restore "%%p"
+goto :EOF
+
 :runTests
 
 for /f "delims=" %%p in ('call :listProjects %*') do dnx -p "%%p" test
@@ -48,6 +50,7 @@ call :checkInstalled dnx
 
 :: Do the actual work
 cd %~dp0
+call :restore src
+call :restore test
 call :buildSubdir src
-call :buildSubdir test
 call :runTests test
