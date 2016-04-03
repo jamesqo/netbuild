@@ -36,7 +36,7 @@ goto :EOF
 :runTests
 
 pushd %1
-for /f "delims=" %%p in ('call :listProjects %*') do dnx -p "%%p" test
+for /f "delims=" %%p in ('%listProjects%') do dnx -p "%%p" test
 popd
 goto :EOF
 
