@@ -2,6 +2,7 @@
 setlocal enableDelayedExpansion
 
 set config=Release
+set listProjects=dir /a-d /b /s project.json ^| findstr /v /i /c:bin /c:obj
 
 goto parseOptions
 
@@ -9,7 +10,9 @@ goto parseOptions
 
 :buildSubdir
 
-for /f "delims=" %%p in ('call :listProjects %*') do call dnu pack "%%p" --configuration "%config%"
+pushd %1
+for /f "delims=" %%p in ('%listProjects%') do call dnu pack "%%p" --configuration "%config%"
+popd
 goto :EOF
 
 :checkInstalled
@@ -22,25 +25,19 @@ if %ERRORLEVEL% NEQ 0 (
 )
 goto :EOF
 
-:listProjects
-
-pushd %1
-for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
-    :: Exclude bin/ and obj/ directories
-    echo %%p | findstr /v /i /c:bin /c:obj
-)
-popd
-goto :EOF
-
 :restore
 
+pushd %1
 :: dnu is a batch script, so we need to `call` it
-for /f "delims=" %%p in ('call :listProjects %*') do call dnu restore "%%p"
+for /f "delims=" %%p in ('%listProjects%') do call dnu restore "%%p"
+popd
 goto :EOF
 
 :runTests
 
+pushd %1
 for /f "delims=" %%p in ('call :listProjects %*') do dnx -p "%%p" test
+popd
 goto :EOF
 
 :: Entry point
