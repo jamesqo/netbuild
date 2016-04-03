@@ -2,7 +2,7 @@
 setlocal enableDelayedExpansion
 
 set config=Release
-set listProjects=dir /a-d /b /s project.json ^^^| findstr /v /i /c:bin /c:obj
+set "listProjects=dir /a-d /b /s project.json ^| findstr /v /i /c:bin /c:obj"
 
 goto parseOptions
 
