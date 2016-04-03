@@ -30,7 +30,7 @@ conf=Release
 while [ $# -gt 0 ]
 do
     case "$1" in
-        -c|--configuration)
+        -c|--config)
             shift
             conf=$1
             ;;
