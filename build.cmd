@@ -1,13 +1,15 @@
 @echo off
 setlocal enableDelayedExpansion
 
-goto main
+set config=Release
+
+goto parseOptions
 
 :: Functions
 
 :buildSubdir
 
-for /f "delims=" %%p in ('call :listProjects %*') do call dnu pack "%%p"
+for /f "delims=" %%p in ('call :listProjects %*') do call dnu pack "%%p" --configuration "%config%"
 goto :EOF
 
 :checkInstalled
@@ -42,7 +44,26 @@ for /f "delims=" %%p in ('call :listProjects %*') do dnx -p "%%p" test
 goto :EOF
 
 :: Entry point
-:main
+:parseOptions
+
+if "%~1" == "" goto parsingDone
+
+if "%~1" == "-c" (
+    shift
+    set config=%1
+    goto parseOptions
+)
+
+if "%~1" == "--config" (
+    shift
+    set config=%1
+    goto parseOptions
+)
+
+shift
+goto parseOptions
+
+:parsingDone
 
 :: Check for dnu and dnx
 call :checkInstalled dnu
