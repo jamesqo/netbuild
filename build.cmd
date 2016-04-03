@@ -7,17 +7,11 @@ goto main
 
 :buildSubdir
 
-pushd %1
-for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
-    :: Exclude bin/ and obj/ directories
-    echo %%p | findstr /i /c:bin /c:obj > NUL
-    if !ERRORLEVEL! NEQ 0 (
-        :: dnu is a batch script, so we need to `call` it
-        call dnu restore "%%p"
-        call dnu pack "%%p"
-    )
+for /f "delims=" %%p in ('call :listProjects %*') do (
+    :: dnu is a batch script, so we need to `call` it
+    call dnu restore "%%p"
+    call dnu pack "%%p"
 )
-popd
 goto :EOF
 
 :checkInstalled
@@ -30,15 +24,19 @@ if %ERRORLEVEL% NEQ 0 (
 )
 goto :EOF
 
-:runTests
+:listProjects
 
 pushd %1
 for /f "delims=" %%p in ('dir /a-d /b /s project.json') do (
     :: Exclude bin/ and obj/ directories
-    echo %%p | findstr /i /c:bin /c:obj > NUL
-    if !ERRORLEVEL! NEQ 0 dnx -p "%%p" test
+    echo %%p | findstr /v /i /c:bin /c:obj
 )
 popd
+goto :EOF
+
+:runTests
+
+for /f "delims=" %%p in ('call :listProjects %*') do dnx -p "%%p" test
 goto :EOF
 
 :: Entry point
