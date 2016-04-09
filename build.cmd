@@ -47,13 +47,13 @@ if "%~1" == "" goto ParsingDone
 
 if "%~1" == "-c" (
     shift
-    set Config=%1
+    set "Config=%~1"
     goto ParseOptions
 )
 
 if "%~1" == "--config" (
     shift
-    set Config=%1
+    set "Config=%~1"
     goto ParseOptions
 )
 
