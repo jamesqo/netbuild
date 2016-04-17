@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set Config=Release
+set Config=Debug
 :: CMD can't capture the output of functions unfortunately, so we
 :: have to make a variable containing the commands we want to run
 set "ListProjects=dir /a-d /b /s project.json | findstr /v /i /c:bin /c:obj"
