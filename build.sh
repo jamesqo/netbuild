@@ -28,7 +28,7 @@ run_tests()
     list_projects "$@" | xargs -i dnx -p {} test
 }
 
-config=Release
+config=Debug
 
 # Parse options
 while [ $# -gt 0 ]
