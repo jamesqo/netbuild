@@ -77,7 +77,8 @@ goto ParseOptions
 call :CheckInstalled dnu dnx
 
 :: Do the actual work
-cd "%~dp0"
+pushd "%~dp0"
 call :Restore src test
 call :BuildSubdir src
 call :RunTests test
+popd
