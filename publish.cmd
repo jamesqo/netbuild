@@ -25,6 +25,7 @@ for /f "delims=" %%d in ('dir /b /ad') do (
     pushd "%%d\bin\Release"
     del /q *.symbols.nupkg
     "!NuGetExe!" push *.nupkg
+    del /q *.nupkg
     popd
 )
 
