@@ -23,10 +23,8 @@ powershell -NoProfile -ExecutionPolicy Bypass "(New-Object Net.WebClient).Downlo
 cd src
 for /f "delims=" %%d in ('dir /b /ad') do (
     pushd "%%d\bin\Release"
-    for /f "delims=" %%p in ('dir /a-d /b *.nupkg') do (
-        echo "%%p" | findstr /v /i ".symbols.nupkg" > NUL
-        if !ERRORLEVEL! EQU 0 "!NuGetExe!" push "%%p"
-    )
+    del /q *.symbols.nupkg
+    "!NuGetExe!" push *.nupkg
     popd
 )
 
