@@ -28,8 +28,3 @@ for /f "delims=" %%d in ('dir /b /ad') do (
     del /q *.nupkg
     popd
 )
-
-:Done
-
-popd
-echo Your packages have been published.
